@@ -23,9 +23,6 @@ export default function Mail() {
 	const handleSend = async (e) => {
 		e.preventDefault();
 
-		console.log("Sending mail:", formData);
-
-		// 🔥 Replace with API call
 		try {
 			await sendMail(formData).unwrap();
 			toast.success("Email sent successfully!");

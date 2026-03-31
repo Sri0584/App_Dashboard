@@ -15,7 +15,6 @@ const Home = () => {
 	const { data: userStats, isLoading: statsLoading } = useGetUserStatsQuery();
 
 	if (analyticsLoading || statsLoading) return <p>Loading dashboard...</p>;
-	console.log(analytics, userStats);
 
 	return (
 		<div className='home'>
