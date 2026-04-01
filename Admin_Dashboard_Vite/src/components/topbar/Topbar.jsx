@@ -56,11 +56,19 @@ const Topbar = () => {
 								width={100}
 							/>
 
-							<button className='logoutBtn' onClick={handleLogout}>
+							<button
+								className='logoutBtn'
+								onClick={handleLogout}
+								aria-label='logout'
+							>
 								Logout
 							</button>
 						</>
-					:	<button className='loginBtn' onClick={() => navigate("/login")}>
+					:	<button
+							className='loginBtn'
+							onClick={() => navigate("/login")}
+							aria-label='login'
+						>
 							Login
 						</button>
 					}

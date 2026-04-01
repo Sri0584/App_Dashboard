@@ -78,11 +78,14 @@ const UserList = () => {
 			renderCell: (params) => (
 				<>
 					<Link to={"/user/" + params.row.id}>
-						<button className='edit'>Edit</button>
+						<button className='edit' aria-label='Edit user'>
+							Edit
+						</button>
 					</Link>
 
 					<DeleteOutline
 						className='delete'
+						aria-label='Delete user'
 						onClick={() => handleDelete(params.row.id)}
 					/>
 				</>
@@ -96,7 +99,7 @@ const UserList = () => {
 	return (
 		<div className='userList-container'>
 			<Link to='/newuser'>
-				<button>Create User</button>
+				<button aria-label='Create user'>Create User</button>
 			</Link>
 			<div className='userList'>
 				<DataGrid

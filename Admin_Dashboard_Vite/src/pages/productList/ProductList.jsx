@@ -88,11 +88,14 @@ const ProductList = () => {
 			renderCell: (params) => (
 				<>
 					<Link to={"/product/" + params.row.id}>
-						<button className='productListEdit'>Edit</button>
+						<button className='productListEdit' aria-label='Edit product'>
+							Edit
+						</button>
 					</Link>
 
 					<DeleteOutline
 						className='productListDelete'
+						aria-label='Delete product'
 						onClick={() => handleDelete(params.row.id)}
 					/>
 				</>
@@ -106,7 +109,9 @@ const ProductList = () => {
 	return (
 		<div className='productList'>
 			<Link to='/newproduct'>
-				<button className='productAddButton'>Add Product</button>
+				<button className='productAddButton' aria-label='Add product'>
+					Add Product
+				</button>
 			</Link>
 			<DataGrid
 				rows={rows}

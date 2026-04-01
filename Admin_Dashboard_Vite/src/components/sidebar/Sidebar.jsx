@@ -20,12 +20,13 @@ const Sidebar = () => {
 				<div className='sidebar-menu'>
 					<h3 className='sidebar-title'>Dashboard</h3>
 					<ul>
-						<Link to='/'>
-							<li className='sidebar-icons'>
-								<LineStyle className='sidebar-icon' />
+						<li className='sidebar-icons'>
+							<LineStyle className='sidebar-icon' />
+							<Link to='/' className='sidebar-links'>
 								Home
-							</li>
-						</Link>
+							</Link>
+						</li>
+
 						<li className='sidebar-icons'>
 							<Timeline className='sidebar-icon' />
 							Analytics
@@ -39,44 +40,53 @@ const Sidebar = () => {
 				<div className='sidebar-menu'>
 					<h3 className='sidebar-title'>Quick Menu</h3>
 					<ul>
-						<Link to='/users'>
-							<li className='sidebar-icons'>
-								<PermIdentity className='sidebar-icon' />
+						<li className='sidebar-icons'>
+							<PermIdentity className='sidebar-icon' />
+							<Link to='/users' className='sidebar-links'>
 								Users
-							</li>
-						</Link>
-						<Link to='/products'>
-							<li className='sidebar-icons'>
-								<Storefront className='sidebar-icon' />
+							</Link>
+						</li>
+						<li className='sidebar-icons'>
+							<Storefront className='sidebar-icon' />
+							<Link to='/products' className='sidebar-links'>
 								Products
-							</li>
-						</Link>
+							</Link>
+						</li>
+
 						<li className='sidebar-icons'>
 							<AttachMoney className='sidebar-icon' />
-							Transactions
+							<Link to='/transactions' className='sidebar-links'>
+								Transactions
+							</Link>
 						</li>
 						<li className='sidebar-icons'>
 							<BarChart className='sidebar-icon' />
-							Reports
+							<Link to='/reports' className='sidebar-links'>
+								Reports
+							</Link>
 						</li>
 					</ul>
 				</div>
 				<div className='sidebar-menu'>
 					<h3 className='sidebar-title'>Notifications</h3>
 					<ul>
-						<Link to='/mail'>
-							<li className='sidebar-icons'>
-								<MailOutline className='sidebar-icon' />
+						<li className='sidebar-icons'>
+							<MailOutline className='sidebar-icon' />
+							<Link to='/mail' className='sidebar-links'>
 								Mail
-							</li>
-						</Link>
+							</Link>
+						</li>
 						<li className='sidebar-icons'>
 							<DynamicFeed className='sidebar-icon' />
-							Feedback
+							<Link to='/feedback' className='sidebar-links'>
+								Feedback
+							</Link>
 						</li>
 						<li className='sidebar-icons'>
 							<ChatBubbleOutline className='sidebar-icon' />
-							Messages
+							<Link to='/messages' className='sidebar-links'>
+								Messages
+							</Link>
 						</li>
 					</ul>
 				</div>
@@ -85,15 +95,21 @@ const Sidebar = () => {
 					<ul>
 						<li className='sidebar-icons'>
 							<WorkOutline className='sidebar-icon' />
-							Manage
+							<Link to='/manage' className='sidebar-links'>
+								Manage
+							</Link>
 						</li>
 						<li className='sidebar-icons'>
 							<Timeline className='sidebar-icon' />
-							Analytics
+							<Link to='/analytics' className='sidebar-links'>
+								Analytics
+							</Link>
 						</li>
 						<li className='sidebar-icons'>
 							<Report className='sidebar-icon' />
-							Reports
+							<Link to='/reports' className='sidebar-links'>
+								Reports
+							</Link>
 						</li>
 					</ul>
 				</div>

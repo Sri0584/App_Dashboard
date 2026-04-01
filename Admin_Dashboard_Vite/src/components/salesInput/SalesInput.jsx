@@ -43,8 +43,8 @@ const SalesInput = ({ sales = [], onChange }) => {
 	};
 
 	return (
-		<div className='salesInput'>
-			<h3>Sales Data</h3>
+		<fieldset className='salesInput'>
+			<legend>Sales Data</legend>
 
 			{data.map((item, index) => (
 				<div className='salesRow' key={index}>
@@ -58,24 +58,34 @@ const SalesInput = ({ sales = [], onChange }) => {
 							</option>
 						))}
 					</select>
-
+					<label htmlFor={`sales-${index}`}>Sales for {item.month}</label>
 					<input
 						type='number'
+						id={`sales-${index}`}
 						value={item.sales}
 						onChange={(e) => handleChange(index, "sales", e.target.value)}
 						placeholder='Sales'
 					/>
 
-					<button onClick={() => removeRow(index)} type='button'>
+					<button
+						onClick={() => removeRow(index)}
+						type='button'
+						aria-label={`Remove sales for ${item.month}`}
+					>
 						❌
 					</button>
 				</div>
 			))}
 
-			<button className='addBtn' type='button' onClick={addRow}>
+			<button
+				className='addBtn'
+				type='button'
+				onClick={addRow}
+				aria-label='add monthly sales'
+			>
 				+ Add Month
 			</button>
-		</div>
+		</fieldset>
 	);
 };
 

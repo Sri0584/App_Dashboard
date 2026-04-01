@@ -33,7 +33,10 @@ const WidgetSm = () => {
 							<span className='widget-title'>{user.email}</span>
 						</div>
 
-						<button className='widget-btn'>
+						<button
+							className='widget-btn'
+							aria-label={`View ${user.username}'s profile`}
+						>
 							<Visibility className='widet-icon' />
 							Display
 						</button>

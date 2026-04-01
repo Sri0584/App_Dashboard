@@ -78,7 +78,7 @@ export default function Mail() {
 					/>
 				</div>
 
-				<button className='mailButton' type='submit'>
+				<button className='mailButton' type='submit' aria-label='send mail'>
 					Send Mail
 				</button>
 			</form>

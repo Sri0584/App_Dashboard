@@ -58,7 +58,9 @@ export default function NewUser() {
 						value={formik.values.username}
 						onChange={formik.handleChange}
 					/>
-					{formik.errors.username && <span>{formik.errors.username}</span>}
+					{formik.errors.username && (
+						<span role='alert'>{formik.errors.username}</span>
+					)}
 				</div>
 
 				<div className='newUserItem'>
@@ -154,7 +156,12 @@ export default function NewUser() {
 					</select>
 				</div>
 
-				<button type='submit' className='newUserButton' disabled={isLoading}>
+				<button
+					type='submit'
+					className='newUserButton'
+					disabled={isLoading}
+					aria-label='Create new user'
+				>
 					{isLoading ? "Creating..." : "Create"}
 				</button>
 			</form>

@@ -18,6 +18,10 @@
 	display: flex;
 	flex-direction: column;
 }
+.sidebar-links {
+	text-decoration: none;
+	color: inherit;
+}
 .sidebar-title {
 	color: gray;
 	margin: 1rem;

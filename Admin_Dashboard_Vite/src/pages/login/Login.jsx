@@ -33,7 +33,6 @@ export default function Login() {
 			// ✅ redirect
 			navigate("/");
 		} catch (err) {
-			console.error(err);
 			toast.error(err?.data || "Login failed ❌");
 			navigate("/register");
 		}
@@ -66,7 +65,7 @@ export default function Login() {
 					required
 				/>
 
-				<button className='loginButton' disabled={isLoading}>
+				<button className='loginButton' disabled={isLoading} aria-label='login'>
 					{isLoading ? "Logging in..." : "Login"}
 				</button>
 			</form>

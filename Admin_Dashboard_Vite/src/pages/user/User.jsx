@@ -161,7 +161,7 @@ const User = () => {
 							/>
 						</div>
 
-						<button type='submit' disabled={isLoading}>
+						<button type='submit' disabled={isLoading} aria-label='Update user'>
 							{isLoading ? "Updating..." : "Update"}
 						</button>
 					</form>

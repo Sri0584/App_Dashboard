@@ -74,7 +74,11 @@ export default function Register() {
 					required
 				/>
 
-				<button className='registerButton' disabled={isLoading}>
+				<button
+					className='registerButton'
+					disabled={isLoading}
+					aria-label='Register'
+				>
 					{isLoading ? "Creating..." : "Register"}
 				</button>
 			</form>

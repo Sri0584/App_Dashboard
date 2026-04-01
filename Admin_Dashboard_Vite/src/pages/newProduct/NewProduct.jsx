@@ -87,7 +87,9 @@ export default function NewProduct() {
 						{...formik.getFieldProps("title")}
 					/>
 					{formik.touched.title && formik.errors.title && (
-						<span className='error'>{formik.errors.title}</span>
+						<span className='error' role='alert'>
+							{formik.errors.title}
+						</span>
 					)}
 				</div>
 				<div className='addProductItem'>
@@ -100,7 +102,9 @@ export default function NewProduct() {
 						{...formik.getFieldProps("img")}
 					/>
 					{formik.touched.img && formik.errors.img && (
-						<span className='error'>{formik.errors.img}</span>
+						<span className='error' role='alert'>
+							{formik.errors.img}
+						</span>
 					)}
 				</div>
 
@@ -115,7 +119,9 @@ export default function NewProduct() {
 						{...formik.getFieldProps("price")}
 					/>
 					{formik.touched.price && formik.errors.price && (
-						<span className='error'>{formik.errors.price}</span>
+						<span className='error' role='alert'>
+							{formik.errors.price}
+						</span>
 					)}
 				</div>
 
@@ -157,7 +163,12 @@ export default function NewProduct() {
 				</div>
 
 				{/* BUTTON */}
-				<button className='addProductButton' type='submit' disabled={isLoading}>
+				<button
+					className='addProductButton'
+					type='submit'
+					disabled={isLoading}
+					aria-label='create product'
+				>
 					{isLoading ? "Creating..." : "Create"}
 				</button>
 			</form>

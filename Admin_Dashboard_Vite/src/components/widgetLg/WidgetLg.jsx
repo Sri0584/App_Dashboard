@@ -26,7 +26,11 @@ const WidgetLg = () => {
 	}, []);
 
 	const Button = ({ type }) => {
-		return <button className={"widget-button " + type}>{type}</button>;
+		return (
+			<button className={"widget-button " + type} aria-label={type}>
+				{type}
+			</button>
+		);
 	};
 
 	if (isLoading) return <p>Loading transactions...</p>;

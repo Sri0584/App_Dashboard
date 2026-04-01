@@ -235,7 +235,11 @@ export default function Product() {
 							<input type='file' id='file' style={{ display: "none" }} />
 						</div>
 
-						<button className='productButton' disabled={isUpdating}>
+						<button
+							className='productButton'
+							disabled={isUpdating}
+							aria-label='Update product'
+						>
 							{isUpdating ? "Updating..." : "Update"}
 						</button>
 					</div>
