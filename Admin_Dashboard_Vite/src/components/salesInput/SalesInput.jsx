@@ -18,6 +18,7 @@ const monthsList = [
 
 const SalesInput = ({ sales = [], onChange }) => {
 	const [data, setData] = useState([]);
+
 	useEffect(() => {
 		setData(sales || []);
 	}, [sales]);
@@ -34,12 +35,14 @@ const SalesInput = ({ sales = [], onChange }) => {
 		const updated = structuredClone(data);
 		updated.push({ month: "Jan", sales: 0 });
 		setData(updated);
+		onChange(updated, "sales");
 	};
 
 	const removeRow = (index) => {
 		const updated = structuredClone(data);
 		updated.splice(index, 1);
 		setData(updated);
+		onChange(updated, "sales");
 	};
 
 	return (

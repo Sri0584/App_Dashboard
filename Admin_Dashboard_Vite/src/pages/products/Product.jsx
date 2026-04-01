@@ -45,7 +45,10 @@ export default function Product() {
 				inStock: product.inStock ? "yes" : "no",
 				active: product.active ? "yes" : "no",
 				sales: product.sales || [],
-				categories: product.categories || [],
+				categories:
+					Array.isArray(product.categories) ? product.categories
+					: product.categories ? [product.categories]
+					: [],
 			});
 		}
 	}, [formData?.title, product]);
@@ -60,6 +63,25 @@ export default function Product() {
 		}));
 	};
 
+	const handleSalesChange = (updatedSales) => {
+		setFormData((prev) => ({
+			...prev,
+			sales: updatedSales,
+		}));
+	};
+
+	const handleCategoryChange = (e) => {
+		const nextCategories =
+			Array.isArray(e.target.value) ? e.target.value
+			: e.target.value ? [e.target.value]
+			: [];
+
+		setFormData((prev) => ({
+			...prev,
+			categories: nextCategories,
+		}));
+	};
+
 	// ✅ Submit update
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -70,6 +92,10 @@ export default function Product() {
 				...formData,
 				inStock: formData.inStock === "yes",
 				active: formData.active === "yes",
+				categories:
+					Array.isArray(formData.categories) ? formData.categories
+					: formData.categories ? [formData.categories]
+					: [],
 			}).unwrap();
 
 			toast.success("Product updated!");
@@ -170,23 +196,13 @@ export default function Product() {
 						{/* SALES */}
 						<SalesInput
 							sales={salesData}
-							onChange={(updatedSales) =>
-								setFormData((prev) => ({
-									...prev,
-									sales: updatedSales,
-								}))
-							}
+							onChange={handleSalesChange}
 						/>
 
 						{/* CATEGORY */}
 						<Category
 							value={formData.categories}
-							handleChange={(e) =>
-								setFormData((prev) => ({
-									...prev,
-									categories: e.target.value,
-								}))
-							}
+							handleChange={handleCategoryChange}
 						/>
 
 						{/* STOCK */}
