@@ -24,9 +24,7 @@ const UserList = () => {
 		email: user.email,
 		status: user.isActive ? "Active" : "Inactive",
 		transaction: user.transactions || "$0",
-		avatar:
-			user.avatar ||
-			"https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg",
+		avatar: user.avatar || "/placeholder.svg",
 	}));
 
 	// ✅ Handle delete (API + UI)

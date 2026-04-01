@@ -33,7 +33,7 @@ const FeaturedInfo = React.memo(
 
 					return (
 						<div className='featuredItem' key={index}>
-							<h1 className='featured-title'>{item.title}</h1>
+							<h2 className='featured-title'>{item.title}</h2>
 
 							<div className='money'>
 								<p>

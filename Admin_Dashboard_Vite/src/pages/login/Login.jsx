@@ -65,7 +65,12 @@ export default function Login() {
 					required
 				/>
 
-				<button className='loginButton' disabled={isLoading} aria-label='login'>
+				<button
+					className='loginButton'
+					disabled={isLoading}
+					aria-label='login'
+					type='submit'
+				>
 					{isLoading ? "Logging in..." : "Login"}
 				</button>
 			</form>

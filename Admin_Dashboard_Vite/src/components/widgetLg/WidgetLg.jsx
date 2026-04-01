@@ -42,10 +42,10 @@ const WidgetLg = () => {
 			<table>
 				<thead>
 					<tr>
-						<th>Customer</th>
-						<th>Date</th>
-						<th>Amount</th>
-						<th>Status</th>
+						<th scope='col'>Customer</th>
+						<th scope='col'>Date</th>
+						<th scope='col'>Amount</th>
+						<th scope='col'>Status</th>
 					</tr>
 				</thead>
 
@@ -55,10 +55,7 @@ const WidgetLg = () => {
 							<td className='first-col'>
 								<img
 									className='row-image'
-									src={
-										tx.profilePic ||
-										"https://images.pexels.com/photos/4172933/pexels-photo-4172933.jpeg"
-									}
+									src={tx.profilePic || "/placeholder.svg"}
 									alt='transaction image'
 									loading='lazy'
 									width={100}

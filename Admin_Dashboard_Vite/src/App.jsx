@@ -5,6 +5,7 @@ import RouteList from "./routes/RouteList";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter } from "react-router-dom";
+
 import "./App.css";
 
 function App() {
@@ -12,10 +13,10 @@ function App() {
 		<>
 			<BrowserRouter>
 				<Topbar />
-				<div className='container'>
+				<main className='container'>
 					<Sidebar />
 					<RouteList />
-				</div>
+				</main>
 			</BrowserRouter>
 			<ToastContainer position='top-right' autoClose={3000} />
 		</>

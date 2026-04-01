@@ -19,10 +19,12 @@ const Home = () => {
 	const { data: userStats, isLoading: statsLoading } = useGetUserStatsQuery();
 
 	const chartData = useMemo(() => userStats || [], [userStats]);
-	if (analyticsLoading || statsLoading) return <p>Loading dashboard...</p>;
+	if (analyticsLoading || statsLoading || !analytics || !userStats)
+		return <p>Loading dashboard...</p>;
 
 	return (
 		<div className='home'>
+			<h1>Dashboard</h1>
 			<Suspense fallback={<div>Loading ...</div>}>
 				<FeaturedInfo
 					users={analytics.users}

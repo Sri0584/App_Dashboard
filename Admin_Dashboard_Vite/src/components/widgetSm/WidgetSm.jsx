@@ -10,16 +10,13 @@ const WidgetSm = () => {
 
 	return (
 		<div className='widgetSm'>
-			<h1 className='widget-title'>New Join Members</h1>
+			<h3 className='widget-title'>New Join Members</h3>
 
 			<ul>
 				{users?.slice(0, 5).map((user) => (
 					<li className='widgetSm-list' key={user._id}>
 						<img
-							src={
-								user.profilePic ||
-								"https://images.pexels.com/photos/3992656/pexels-photo-3992656.png?auto=compress&cs=tinysrgb&dpr=2&w=500"
-							}
+							src={user.profilePic || "/placeholder.svg"}
 							alt='user image'
 							className='widget-image'
 							loading='lazy'

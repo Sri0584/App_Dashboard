@@ -13,7 +13,7 @@ import {
 const Chart = React.memo(({ title, data, datakey, grid, xDatakey }) => {
 	return (
 		<div className='chart'>
-			<h1 className='chart-title'>{title}</h1>
+			<h2 className='chart-title'>{title}</h2>
 
 			<ResponsiveContainer width='100%' height={300}>
 				<LineChart width={500} height={300} data={data}>

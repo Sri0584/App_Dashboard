@@ -68,8 +68,7 @@ const User = () => {
 								typeof displayData?.avatar === "string" ? displayData.avatar
 								: displayData?.avatar ?
 									URL.createObjectURL(displayData.avatar)
-								:	"https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg"
-
+								:	"/placeholder.svg"
 							}
 							alt='user avatar'
 							loading='lazy'

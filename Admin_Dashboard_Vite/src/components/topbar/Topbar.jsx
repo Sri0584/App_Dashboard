@@ -45,10 +45,7 @@ const Topbar = () => {
 							</span>
 
 							<img
-								src={
-									user.profilePic ||
-									"https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg"
-								}
+								src={user.profilePic || "https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg"}
 								alt='profile'
 								className='topAvatar'
 								loading='lazy'

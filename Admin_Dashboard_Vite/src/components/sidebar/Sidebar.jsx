@@ -15,7 +15,7 @@ import Report from "@mui/icons-material/Report";
 
 const Sidebar = () => {
 	return (
-		<div className='sidebar'>
+		<div className='sidebar' data-testid='sidebar' role='navigation'>
 			<div className='sidebar-wrapper'>
 				<div className='sidebar-menu'>
 					<h3 className='sidebar-title'>Dashboard</h3>

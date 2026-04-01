@@ -35,8 +35,7 @@ const transactionSchema = new mongoose.Schema(
 
 		profilePic: {
 			type: String,
-			default:
-				"https://images.pexels.com/photos/4172933/pexels-photo-4172933.jpeg",
+			default: "/placeholder.svg",
 		},
 	},
 	{ timestamps: true },

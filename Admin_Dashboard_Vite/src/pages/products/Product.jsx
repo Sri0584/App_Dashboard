@@ -1,8 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./product.css";
-import Chart from "../../components/chart/Chart";
 import Publish from "@mui/icons-material/Publish";
-import { useEffect, useMemo, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 
 import { toast } from "react-toastify";
 import {
@@ -11,6 +10,7 @@ import {
 } from "../../redux/api/productApi";
 import SalesInput from "../../components/salesInput/SalesInput";
 import Category from "../../components/categories/Category";
+const Chart = React.lazy(() => import("../../components/chart/Chart"));
 
 export default function Product() {
 	const { id } = useParams();
@@ -90,23 +90,24 @@ export default function Product() {
 
 			{/* TOP SECTION */}
 			<div className='productTop'>
-				<div className='productTopLeft'>
-					<Chart
-						data={formData.sales}
-						datakey='sales'
-						title='Sales Performance'
-						xDatakey='month'
-						grid
-					/>
-				</div>
+				{formData?.sales?.length > 0 && (
+					<div className='productTopLeft'>
+						<Suspense fallback={<div>Loading chart...</div>}>
+							<Chart
+								data={formData.sales}
+								datakey='sales'
+								title='Sales Performance'
+								xDatakey='month'
+								grid
+							/>
+						</Suspense>
+					</div>
+				)}
 
 				<div className='productTopRight'>
 					<div className='productInfoTop'>
 						<img
-							src={
-								formData.img ||
-								"https://images.pexels.com/photos/7156886/pexels-photo-7156886.jpeg"
-							}
+							src={formData.img || "/placeholder.svg"}
 							alt='Product information'
 							className='productInfoImg'
 							loading='lazy'
@@ -217,10 +218,7 @@ export default function Product() {
 					<div className='productFormRight'>
 						<div className='productUpload'>
 							<img
-								src={
-									formData.img ||
-									"https://images.pexels.com/photos/7156886/pexels-photo-7156886.jpeg"
-								}
+								src={formData.img || "/placeholder.svg"}
 								alt='Product Preview'
 								className='productUploadImg'
 								loading='lazy'

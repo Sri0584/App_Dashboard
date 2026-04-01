@@ -26,9 +26,7 @@ const ProductList = () => {
 		status: product.active ? "Active" : "Inactive",
 		price: product.price || 0,
 		title: product.title,
-		img:
-			product.img ||
-			"https://images.pexels.com/photos/7156886/pexels-photo-7156886.jpeg",
+		img: product.img || "/placeholder.svg",
 	}));
 
 	// ✅ Delete handler
