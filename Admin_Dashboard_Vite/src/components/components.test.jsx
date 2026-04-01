@@ -92,6 +92,14 @@ describe("component coverage", () => {
 		expect(screen.getAllByText(/select category/i).length).toBeGreaterThan(0);
 	});
 
+	it("renders category in multi-select mode for existing product values", () => {
+		renderWithProviders(
+			<Category value={["electronics", "gaming"]} handleChange={vi.fn()} />,
+		);
+
+		expect(screen.getByRole("combobox")).toHaveTextContent("electronics, gaming");
+	});
+
 	it("renders chart with and without the optional grid", () => {
 		const props = {
 			title: "Monthly Sales",
@@ -160,9 +168,24 @@ describe("component coverage", () => {
 		);
 
 		fireEvent.click(screen.getByRole("button", { name: /add monthly sales/i }));
+		await waitFor(() =>
+			expect(onChange).toHaveBeenCalledWith(
+				[
+					{ month: "Feb", sales: 25 },
+					{ month: "Jan", sales: 0 },
+				],
+				"sales",
+			),
+		);
 		expect(screen.getAllByRole("button", { name: /remove sales for/i })).toHaveLength(2);
 
 		fireEvent.click(screen.getAllByRole("button", { name: /remove sales for jan/i })[0]);
+		await waitFor(() =>
+			expect(onChange).toHaveBeenCalledWith(
+				[{ month: "Feb", sales: 25 }],
+				"sales",
+			),
+		);
 		expect(screen.getAllByRole("button", { name: /remove sales for/i })).toHaveLength(1);
 	});
 

@@ -598,7 +598,19 @@ describe("page coverage", () => {
 		fireEvent.change(screen.getByLabelText(/^active$/i), {
 			target: { value: "yes" },
 		});
-		fireEvent.click(screen.getByRole("button", { name: /update product/i }));
+		fireEvent.change(screen.getByRole("spinbutton", { name: /sales for jan/i }), {
+			target: { value: "10" },
+		});
+		fireEvent.click(screen.getByRole("button", { name: /add monthly sales/i }));
+		fireEvent.change(screen.getAllByRole("combobox")[0], {
+			target: { value: "Feb" },
+		});
+		fireEvent.mouseDown(screen.getByRole("combobox", { expanded: false }));
+		fireEvent.click(await screen.findByRole("option", { name: /fitness/i }));
+		fireEvent.keyDown(screen.getByRole("listbox"), { key: "Escape" });
+		fireEvent.click(
+			screen.getByRole("button", { name: /update product/i, hidden: true }),
+		);
 
 		await waitFor(() =>
 			expect(mocks.updateProductMutation).toHaveBeenCalledWith(
@@ -607,6 +619,11 @@ describe("page coverage", () => {
 					title: "Updated Console",
 					inStock: false,
 					active: true,
+					sales: [
+						{ month: "Feb", sales: 10 },
+						{ month: "Jan", sales: 0 },
+					],
+					categories: ["gaming", "fitness"],
 				}),
 			),
 		);
