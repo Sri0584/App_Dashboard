@@ -8,6 +8,7 @@ import {
 	useGetProductByIdQuery,
 	useUpdateProductMutation,
 } from "../../redux/api/productApi";
+import { useRefreshTokenMutation } from "../../redux/api/authApi";
 import SalesInput from "../../components/salesInput/SalesInput";
 import Category from "../../components/categories/Category";
 const Chart = React.lazy(() => import("../../components/chart/Chart"));
@@ -24,18 +25,20 @@ export default function Product() {
 
 	// ✅ Mutation
 	const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
+	const [refreshToken] = useRefreshTokenMutation();
 
 	// ✅ Local form state
 	const [formData, setFormData] = useState({
 		title: "",
 		img: "",
+		price: "",
 		inStock: "yes",
 		active: "yes",
 		sales: [],
 		categories: [],
 	});
 
-	const salesData = useMemo(() => formData?.sales || [], [formData?.sales]);
+	const salesData = useMemo(() => formData?.sales || [], [formData.sales]);
 
 	useEffect(() => {
 		if (product && !formData?.title) {
@@ -45,6 +48,7 @@ export default function Product() {
 				inStock: product.inStock ? "yes" : "no",
 				active: product.active ? "yes" : "no",
 				sales: product.sales || [],
+				price: Number(product.price) || 0,
 				categories:
 					Array.isArray(product.categories) ? product.categories
 					: product.categories ? [product.categories]
@@ -86,22 +90,43 @@ export default function Product() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		try {
-			await updateProduct({
-				id,
-				...formData,
-				inStock: formData.inStock === "yes",
-				active: formData.active === "yes",
-				categories:
-					Array.isArray(formData.categories) ? formData.categories
-					: formData.categories ? [formData.categories]
-					: [],
-			}).unwrap();
+		const updatePayload = {
+			id,
+			...formData,
+			inStock: formData.inStock === "yes",
+			active: formData.active === "yes",
+			price: Number(formData.price) || 0,
+			categories:
+				Array.isArray(formData.categories) ? formData.categories
+				: formData.categories ? [formData.categories]
+				: [],
+		};
 
+		try {
+			await updateProduct(updatePayload).unwrap();
 			toast.success("Product updated!");
 			navigate("/products");
 		} catch (err) {
-			toast.error(err?.data || "Update failed ❌");
+			// Handle token expiration
+			if (err?.status === 401 && err?.data === "Invalid token!") {
+				try {
+					// Try to refresh the token
+					await refreshToken().unwrap();
+
+					// Retry the product update after token refresh
+					await updateProduct(updatePayload).unwrap();
+					toast.success("Product updated!");
+					navigate("/products");
+				} catch (refreshErr) {
+					// Token refresh failed, redirect to login
+					toast.error(
+						`Session expired. Please login again. (${refreshErr?.data || refreshErr.message})`,
+					);
+					navigate("/login");
+				}
+			} else {
+				toast.error(err?.data || "Update failed ❌");
+			}
 		}
 	};
 
@@ -194,15 +219,20 @@ export default function Product() {
 						/>
 
 						{/* SALES */}
-						<SalesInput
-							sales={salesData}
-							onChange={handleSalesChange}
-						/>
+						<SalesInput sales={salesData} onChange={handleSalesChange} />
 
 						{/* CATEGORY */}
 						<Category
 							value={formData.categories}
 							handleChange={handleCategoryChange}
+						/>
+						<label htmlFor='price'>Price</label>
+						<input
+							type='text'
+							name='price'
+							id='price'
+							value={formData.price}
+							onChange={handleChange}
 						/>
 
 						{/* STOCK */}
@@ -254,11 +284,15 @@ export default function Product() {
 							disabled={isUpdating}
 							aria-label='Update product'
 						>
-							{isUpdating ? "Updating..." : "Update"}
+							{isUpdating ? "Updating Product..." : "Update Product"}
 						</button>
 					</div>
 				</form>
 			</div>
+
+			<button className='productButton' onClick={() => navigate("/products")}>
+				Back to Products
+			</button>
 		</div>
 	);
 }

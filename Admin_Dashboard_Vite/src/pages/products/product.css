@@ -86,9 +86,9 @@
 
 .productFormLeft > input {
 	margin-bottom: 10px;
-	border: none;
 	padding: 8px 5px;
-	border-bottom: 1px solid var(--border);
+	border: 1px solid var(--border);
+	border-radius: 5px;
 	background: transparent;
 	color: var(--text);
 }

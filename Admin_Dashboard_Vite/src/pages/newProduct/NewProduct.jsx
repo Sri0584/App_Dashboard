@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import { object, string, number, array } from "yup";
 import { toast } from "react-toastify";
 import { useCreateProductMutation } from "../../redux/api/productApi";
+import { useRefreshTokenMutation } from "../../redux/api/authApi";
 
 const options = [
 	"electronics",
@@ -16,7 +17,7 @@ const options = [
 export default function NewProduct() {
 	const navigate = useNavigate();
 	const [createProduct, { isLoading }] = useCreateProductMutation();
-
+	const [refreshToken] = useRefreshTokenMutation();
 	// ✅ validation schema
 	const validationSchema = object({
 		title: string().min(3, "Too short").required("Product title is required"),
@@ -47,24 +48,41 @@ export default function NewProduct() {
 		validationSchema,
 
 		onSubmit: async (values) => {
+			const payload = {
+				title: values.title,
+				price: Number(values.price),
+				inStock: values.inStock === "yes",
+				active: values.active === "yes",
+				img: values.img,
+				categories: values.categories,
+				sales: values.sales || [],
+			};
 			try {
-				const payload = {
-					title: values.title,
-					price: Number(values.price),
-					inStock: values.inStock === "yes",
-					active: values.active === "yes",
-					img: values.img,
-					categories: values.categories,
-					sales: values.sales || [],
-				};
-
 				await createProduct(payload).unwrap();
 
 				toast.success("✅ Product created successfully!");
 				formik.resetForm();
 				navigate("/products");
 			} catch (err) {
-				toast.error(err?.data?.message || "❌ Failed to create product");
+				if (err?.status === 401 && err?.data === "Invalid token!") {
+					try {
+						// Try to refresh the token
+						await refreshToken().unwrap();
+
+						// Retry the product update after token refresh
+						await createProduct(payload).unwrap();
+						toast.success("Product created!");
+						navigate("/products");
+					} catch (refreshErr) {
+						// Token refresh failed, redirect to login
+						toast.error(
+							`Session expired. Please login again. (${refreshErr?.data || refreshErr.message})`,
+						);
+						navigate("/login");
+					}
+				} else {
+					toast.error(err?.data || "Update failed ❌");
+				}
 			}
 		},
 	});

@@ -35,7 +35,7 @@ const RouteList = () => {
 				<Route path='/login' element={<Login />} />
 				<Route path='/logout' element={<Logout />} />
 				<Route path='/register' element={<Register />} />
-
+				{/* MAIL */}
 				<Route path='/mail' element={<Mail />} />
 			</Routes>
 		</Suspense>

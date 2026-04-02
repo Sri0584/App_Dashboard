@@ -6,6 +6,12 @@ const userSchema = new mongoose.Schema(
 		email: String,
 		password: String,
 		isAdmin: { type: Boolean, default: false },
+		role: {
+			type: String,
+			enum: ["admin", "manager", "support"],
+			default: "support",
+		},
+		refreshToken: { type: String, default: null, select: false },
 		profilePic: String,
 	},
 	{ timestamps: true },

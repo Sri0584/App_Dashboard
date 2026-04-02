@@ -19,6 +19,8 @@ export default function NewUser() {
 			address: "",
 			gender: "male",
 			active: "yes",
+			role: "admin",
+			avatar: "",
 		},
 
 		validationSchema: object({
@@ -27,6 +29,10 @@ export default function NewUser() {
 			email: string().email("Invalid email").required("Required"),
 			password: string().min(6, "Min 6 chars").required("Required"),
 			phone: string().required("Required"),
+			address: string().required("Required"),
+			role: string()
+				.oneOf(["admin", "manager", "support"])
+				.required("Required"),
 		}),
 
 		onSubmit: async (values, { resetForm }) => {
@@ -153,6 +159,20 @@ export default function NewUser() {
 					>
 						<option value='yes'>Yes</option>
 						<option value='no'>No</option>
+					</select>
+				</div>
+				<div className='newUserItem'>
+					<label htmlFor='role'>Role</label>
+					<select
+						className='newUserSelect'
+						name='role'
+						id='role'
+						value={formik.values.role}
+						onChange={formik.handleChange}
+					>
+						<option value='admin'>Admin</option>
+						<option value='manager'>Manager</option>
+						<option value='support'>Support</option>
 					</select>
 				</div>
 

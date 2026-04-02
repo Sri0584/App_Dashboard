@@ -35,7 +35,22 @@ export const authApi = apiSlice.injectEndpoints({
 				body: data,
 			}),
 		}),
+		refreshToken: builder.mutation({
+			query: () => ({
+				url: "/auth/refresh",
+				method: "POST",
+				credentials: "include", // Include cookies with refresh token
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({}),
+			}),
+		}),
 	}),
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const {
+	useLoginMutation,
+	useRegisterMutation,
+	useRefreshTokenMutation,
+} = authApi;

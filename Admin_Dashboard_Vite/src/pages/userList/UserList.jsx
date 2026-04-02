@@ -23,6 +23,7 @@ const UserList = () => {
 		username: user.username,
 		email: user.email,
 		status: user.isActive ? "Active" : "Inactive",
+		role: user.role,
 		transaction: user.transactions || "$0",
 		avatar: user.avatar || "/placeholder.svg",
 	}));
@@ -62,7 +63,7 @@ const UserList = () => {
 		{ field: "email", headerName: "Email", width: 200 },
 
 		{ field: "status", headerName: "Status", width: 120 },
-
+		{ field: "role", headerName: "Role", width: 120 },
 		{
 			field: "transaction",
 			headerName: "Transaction Volume",

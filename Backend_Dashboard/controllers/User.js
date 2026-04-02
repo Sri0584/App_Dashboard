@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 // ✅ GET ALL USERS
 const getUsers = async (req, res) => {
 	try {
-		const users = await User.find();
+		const users = await User.find().select("-password -refreshToken");
 		res.json(users);
 	} catch (err) {
 		res.status(500).json(err.message);
@@ -14,16 +14,26 @@ const getUsers = async (req, res) => {
 // ✅ CREATE USER
 const createUser = async (req, res) => {
 	try {
-		const { username, email, password } = req.body;
+		const { username, email, password, role, isAdmin } = req.body;
+		const existingUser = await User.findOne({ email });
+		if (existingUser) {
+			return res.status(400).json("User already exists");
+		}
+
 		const hashedPwd = await bcrypt.hash(password, 10);
 		const newUser = new User({
 			username,
 			email,
 			password: hashedPwd,
+			role:
+				isAdmin || role === "admin" ? "admin"
+				: role === "manager" ? "manager"
+				: "support",
 		});
+		newUser.isAdmin = newUser.role === "admin";
 
 		const savedUser = await newUser.save();
-		const { password: _, ...userData } = savedUser._doc;
+		const { password: _, refreshToken, ...userData } = savedUser._doc;
 		res.status(201).json(userData);
 	} catch (err) {
 		res.status(500).json(err.message);
@@ -46,7 +56,9 @@ const deleteUser = async (req, res) => {
 
 const getUserById = async (req, res) => {
 	try {
-		const user = await User.findById(req.params.id);
+		const user = await User.findById(req.params.id).select(
+			"-password -refreshToken",
+		);
 		res.json(user);
 	} catch (err) {
 		res.status(500).json(err);
@@ -55,12 +67,29 @@ const getUserById = async (req, res) => {
 
 const updateUser = async (req, res) => {
 	try {
+		const updates = { ...req.body };
+
+		if (updates.password) {
+			updates.password = await bcrypt.hash(updates.password, 10);
+		}
+
+		if (
+			updates.role &&
+			!["admin", "manager", "support"].includes(updates.role)
+		) {
+			return res.status(400).json("Invalid role");
+		}
+
+		if (updates.role) {
+			updates.isAdmin = updates.role === "admin";
+		}
+
 		const updatedUser = await User.findByIdAndUpdate(
 			req.params.id,
 			{
-				$set: req.body,
+				$set: updates,
 			},
-			{ new: true }, // return updated doc
+			{ new: true, projection: { password: 0, refreshToken: 0 } }, // return updated doc
 		);
 
 		res.status(200).json(updatedUser);

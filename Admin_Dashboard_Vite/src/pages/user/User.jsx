@@ -63,42 +63,43 @@ const User = () => {
 				{/* LEFT */}
 				<div className='old-data'>
 					<div className='title'>
-						<img
-							src={
-								typeof displayData?.avatar === "string" ? displayData.avatar
-								: displayData?.avatar ?
-									URL.createObjectURL(displayData.avatar)
-								:	"/placeholder.svg"
-							}
-							alt='user avatar'
-							loading='lazy'
-							className='oldData-image'
-							width={100}
-							height={100}
-						/>
+						<div className='displayFlex'>
+							<img
+								src={
+									typeof displayData?.avatar === "string" ? displayData.avatar
+									: displayData?.avatar ?
+										URL.createObjectURL(displayData.avatar)
+									:	"/placeholder.svg"
+								}
+								alt='user avatar'
+								loading='lazy'
+								className='oldData-image'
+								width={100}
+								height={100}
+							/>
 
-						<div>
-							<span>{displayData.username}&nbsp;</span>
-							<span>Software Engineer</span>
+							<div style={{ alignSelf: "anchor-center" }}>
+								<span>{displayData.username}&nbsp;</span>
+								<span>Software Engineer</span>
+							</div>
+						</div>
+						<div className='displayFlex'>
+							<PermIdentity />
+							<span className='alignSelfEnd'>{displayData.username}</span>
+						</div>
+
+						<div className='displayFlex'>
+							<MailOutline />
+							<span className='alignSelfEnd'>{displayData.email}</span>
+						</div>
+
+						<div className='displayFlex'>
+							<LocationSearching />
+							<span className='alignSelfEnd'>New York | USA</span>
 						</div>
 					</div>
-
-					<div>
-						<PermIdentity />
-						<span>{displayData.username}</span>
-					</div>
-
-					<div>
-						<MailOutline />
-						<span>{displayData.email}</span>
-					</div>
-
-					<div>
-						<LocationSearching />
-						<span>New York | USA</span>
-					</div>
+					<div className='details'></div>
 				</div>
-
 				{/* RIGHT */}
 				<div className='edit-data'>
 					<h2>Edit</h2>
@@ -122,14 +123,21 @@ const User = () => {
 							onChange={handleChange}
 						/>
 
-						<label htmlFor='transaction'>Transaction</label>
-						<input
-							type='text'
-							name='transaction'
-							id='transaction'
-							value={displayData.transaction || ""}
-							onChange={handleChange}
-						/>
+						{displayData.isAdmin && (
+							<>
+								<label htmlFor='role'>Role</label>
+								<select
+									name='role'
+									id='role'
+									onChange={handleChange}
+									value={displayData.role || "Admin"}
+								>
+									<option value='admin'>Admin</option>
+									<option value='manager'>Manager</option>
+									<option value='support'>Support</option>
+								</select>
+							</>
+						)}
 
 						<div>
 							<img
@@ -137,9 +145,9 @@ const User = () => {
 									typeof displayData.avatar === "string" ? displayData.avatar
 									: displayData.avatar ?
 										URL.createObjectURL(displayData.avatar)
-									:	""
+									:	"/placeholder.svg"
 								}
-								alt='Avatar'
+								alt='Avatar Preview'
 								width='100'
 								loading='lazy'
 								height='100'
