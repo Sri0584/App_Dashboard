@@ -48,7 +48,10 @@ const getRefreshCookieOptions = () => ({
 	secure: false, // Disable secure for development (HTTP)
 	path: "/", // Allow cookie for all routes
 	maxAge: 7 * 24 * 60 * 60 * 1000,
-	domain: process.env.NODE_ENV === "production" ? undefined : "localhost", // Set domain for localhost in development
+	domain:
+		process.env.NODE_ENV === "production" ?
+			"app-dashboard-api-c4gvdch3fvgcgtcz.westeurope-01.azurewebsites.net"
+		:	"localhost", // Set domain for localhost in development
 });
 
 module.exports = {

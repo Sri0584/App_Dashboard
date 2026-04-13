@@ -21,7 +21,10 @@ const io = new Server(server, {
 
 app.use(express.json());
 app.use(
-	cors({ origin: "https://orange-smoke-016ceda03.7.azurestaticapps.net" }),
+	cors({
+		origin: "https://orange-smoke-016ceda03.7.azurestaticapps.net",
+		credentials: true,
+	}),
 );
 // ✅ ROUTES
 app.use("/api/auth", authRoutes);

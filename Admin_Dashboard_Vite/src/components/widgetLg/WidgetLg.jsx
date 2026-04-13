@@ -3,7 +3,9 @@ import { useGetTransactionsQuery } from "../../redux/api/transactionApi";
 import "./WidgetLg.css";
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:5000");
+const socket = io(
+	"http://app-dashboard-api-c4gvdch3fvgcgtcz.westeurope-01.azurewebsites.net",
+);
 
 const WidgetLg = () => {
 	const { data, isLoading } = useGetTransactionsQuery();
