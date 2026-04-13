@@ -20,15 +20,7 @@ const io = new Server(server, {
 });
 
 app.use(express.json());
-app.use(
-	cors({
-		origin:
-			"https://app-dashboard-cjgnd4cee4a5gshw.westeurope-01.azurewebsites.net" ||
-			process.env.CLIENT_URL ||
-			"http://localhost:5174",
-		credentials: true,
-	}),
-);
+app.use(cors());
 // ✅ ROUTES
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);

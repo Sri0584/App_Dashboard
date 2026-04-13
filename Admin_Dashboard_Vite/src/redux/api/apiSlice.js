@@ -4,7 +4,7 @@ export const apiSlice = createApi({
 	reducerPath: "api",
 	baseQuery: fetchBaseQuery({
 		baseUrl:
-			"https://app-dashboard-cjgnd4cee4a5gshw.westeurope-01.azurewebsites.net/api",
+			"https://app-dashboard-api-c4gvdch3fvgcgtcz.westeurope-01.azurewebsites.net/api",
 		credentials: "include", // Include cookies with all requests
 		prepareHeaders: (headers, { getState }) => {
 			const tok = JSON.parse(localStorage.getItem("user")) || {};
