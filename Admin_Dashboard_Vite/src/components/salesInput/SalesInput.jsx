@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./SalesInput.css";
+import "./salesInput.css";
 
 const monthsList = [
 	"Jan",
